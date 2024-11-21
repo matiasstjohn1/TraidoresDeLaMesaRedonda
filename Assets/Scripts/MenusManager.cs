@@ -13,6 +13,7 @@ public class MenusManager : MonoBehaviour
     public GameObject carpetaInicial;
     public GameObject carpetaConfig;
     public GameObject carpetaCredits;
+    public GameObject carpetaRooms;
 
     public void Config()
     {
@@ -21,6 +22,7 @@ public class MenusManager : MonoBehaviour
         //False
         carpetaCredits.SetActive(false);
         carpetaInicial.SetActive(false);
+        carpetaRooms.SetActive(false);
     }
 
     public void Credits()
@@ -30,6 +32,7 @@ public class MenusManager : MonoBehaviour
         //False
         carpetaConfig.SetActive(false);
         carpetaInicial.SetActive(false);
+        carpetaRooms.SetActive(false);
     }
 
     public void Back()
@@ -39,12 +42,22 @@ public class MenusManager : MonoBehaviour
         //False
         carpetaCredits.SetActive(false);
         carpetaConfig.SetActive(false);
+        carpetaRooms.SetActive(false);
     }
-    //Boton del menu para jugar
-    public void ButtonPlay()
+    public void Rooms()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //True
+        carpetaRooms.SetActive(true);
+        //False
+        carpetaConfig.SetActive(false);
+        carpetaInicial.SetActive(false);
+        carpetaCredits.SetActive(false);
     }
+    public void GoMenu()
+    {
+        SceneManager.LoadScene(1);
+    }
+
     public void ExitGame()
     {
         Application.Quit();

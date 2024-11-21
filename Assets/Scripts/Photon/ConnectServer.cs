@@ -16,10 +16,6 @@ public class ConnectServer : MonoBehaviourPunCallbacks
     }
     public override void OnConnectedToMaster()
     {
-        PhotonNetwork.JoinLobby();
-    }
-    public override void OnJoinedLobby()
-    {
-        SceneManager.LoadScene("Menu");
+        PhotonNetwork.LoadLevel("Rooms");
     }
 }

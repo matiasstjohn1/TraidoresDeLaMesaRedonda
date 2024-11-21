@@ -2,56 +2,75 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
-public class PlayerSpawn : MonoBehaviour
+public class PlayerSpawn : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private GameObject PlayerPrefab;
+    [SerializeField] private GameObject cardPrefab; //Prefab de la carta o personaje
+    [SerializeField] private List<Transform> spawnPositions; //Lista de posiciones de spawn para las cartas
 
-    public List<Transform> spawnPositions = new List<Transform>();
-    private PhotonView pv;
-
-    private void Awake()
-    {
-        pv = GetComponent<PhotonView>();
-    }
+    private bool cardsInstantiated = false;
     private void Start()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient && !cardsInstantiated)
         {
-            int[] spawnIndices = GenerateSpawnIndices();
-            pv.RPC("SetSpawns", RpcTarget.AllBuffered, spawnIndices);
+            InstantiateCardsForAllPlayers();
+        }
+    }
+    //Método que se llama cuando el jugador entra en la sala
+    public override void OnJoinedRoom()
+    {
+        base.OnJoinedRoom();
+        SpawnPlayerCard();
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+
+        //Instanciar la carta para el nuevo jugador
+        if (newPlayer == PhotonNetwork.LocalPlayer)
+        {
+            SpawnPlayerCard();
         }
     }
 
-    private int[] GenerateSpawnIndices()
+    //Método para instanciar las cartas para todos los jugadores
+    private void InstantiateCardsForAllPlayers()
     {
-        int[] indices = new int[spawnPositions.Count];
-        for (int i = 0; i < spawnPositions.Count; i++)
-        {
-            indices[i] = i;
-        }
+        cardsInstantiated = true; //Marcamos que las cartas ya han sido instanciadas
 
-        System.Random rand = new System.Random();
-        for (int i = 0; i < spawnPositions.Count; i++)
+        //Instanciamos una carta para cada jugador en la sala
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
-            int j = rand.Next(i, spawnPositions.Count);
-            int temp = indices[i];
-            indices[i] = indices[j];
-            indices[j] = temp;
-        }
-        return indices;
-    }
+            int playerIndex = i;
 
-    [PunRPC]
-    private void SetSpawns(int[] spawnIndices)
-    {
-        for (int i = 0; i < spawnIndices.Length; i++)
-        {
-            int spawnIndex = spawnIndices[i];
-            if (spawnIndex < spawnPositions.Count)
+            if (playerIndex < spawnPositions.Count)
             {
-                PhotonNetwork.Instantiate(PlayerPrefab.name, spawnPositions[spawnIndex].position, Quaternion.identity);
+                PhotonNetwork.Instantiate(cardPrefab.name, spawnPositions[playerIndex].position, spawnPositions[playerIndex].rotation);
+                Debug.Log($"Carta instanciada para {PhotonNetwork.PlayerList[i].NickName} en la posición {playerIndex}");
             }
+            else
+            {
+                Debug.LogWarning("No hay suficientes posiciones de spawn para todos los jugadores.");
+            }
+        }
+    }
+
+    //Método para instanciar la carta solo para el jugador local
+    private void SpawnPlayerCard()
+    {
+        //Posición de spawn al jugador basado en su ActorNumber
+        int playerIndex = PhotonNetwork.LocalPlayer.ActorNumber - 1;
+
+        if (playerIndex < spawnPositions.Count)
+        {
+            PhotonNetwork.Instantiate(cardPrefab.name, spawnPositions[playerIndex].position, spawnPositions[playerIndex].rotation);
+            Debug.Log($"Carta instanciada para {PhotonNetwork.LocalPlayer.NickName} en la posición {playerIndex}");
+        }
+        else
+        {
+            Debug.LogWarning("No hay suficientes posiciones de spawn para todos los jugadores.");
         }
     }
 }

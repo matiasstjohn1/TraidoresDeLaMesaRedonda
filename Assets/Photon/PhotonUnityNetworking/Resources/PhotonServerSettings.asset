@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: 209d6e4d-56e9-4431-b7a7-55c850d43226
+    AppIdRealtime: 6628c269-f7a6-4971-bea0-5b66203663ec
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
@@ -41,6 +41,38 @@ MonoBehaviour:
   - RespawnSpaceship
   - SetSpawn
   - SetSpawns
+  - SetupPlayer
+  - ReceiveRole
+  - SyncRole
+  - AssignRole
+  - ChangeColorToRed
+  - TriggerDefeat
+  - TriggerWin
+  - SyncButton
+  - SyncEventHistory
+  - SyncTextAndButtons
+  - ActivateSubButtons
+  - PlayBackgroundMusic_RPC
+  - PlayCombatSounds_RPC
+  - ActivateSubButtons_RPC
+  - ActivateButtonsByRole
+  - ActivateSubButtonsForLocalPlayerRPC
+  - SyncState
+  - FindPlayers
+  - KillPlayer_RPC
+  - ProtectPlayer_RPC
+  - ShowRoleMerlin_RPC
+  - Suicide_RPC
+  - IncreaseVote
+  - ExpulsePlayer
+  - SyncButton2
+  - SyncVoteCount
+  - CountVotes
+  - KingReveal_RPC
+  - CountSkips
+  - AssignUniqueBystanderSprite
+  - AssignBystanderSprite
+  - Syncdays
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

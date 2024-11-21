@@ -9,12 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Loading.unity
     guid: 229000e0410c32748bc2111006d21caf
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
-    guid: ed9ea5327eee86943ab5ce8efb5ed5c1
-  - enabled: 1
     path: Assets/Scenes/Rooms.unity
     guid: a3f4d2b54890cd44ba4f20d67f5cc2b6
   - enabled: 1
     path: Assets/Scenes/GamePlay.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Lose.unity
+    guid: a5624124317d1d54e9ad718381068e85
+  - enabled: 1
+    path: Assets/Scenes/Win.unity
+    guid: a97321b423bff7949a88e3f87dd42b4b
   m_configObjects: {}
