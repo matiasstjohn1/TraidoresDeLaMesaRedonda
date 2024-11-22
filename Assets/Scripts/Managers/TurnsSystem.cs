@@ -81,14 +81,7 @@ public class TurnsSystem : MonoBehaviourPunCallbacks
     {
         if (dias > 1)
             photonView.RPC("Syncdays", RpcTarget.All, 0);
-        if (GameManager.Instance.isKingDead == true && GameManager.Instance.isMageDead == true)
-        {
-            GameManager.Instance.TriggerDefeat();
-        }
-        if (GameManager.Instance.isKillerDead == true)
-        {
-            GameManager.Instance.TriggerWin();
-        }
+
         photonView.RPC("SyncTextAndButtons", RpcTarget.All, false, ""); //Oculta todos los textos y botones
         yield return new WaitForSeconds(10f);
 
@@ -129,6 +122,14 @@ public class TurnsSystem : MonoBehaviourPunCallbacks
 
     public IEnumerator DebateTurn()
     {
+        if (GameManager.Instance.isKingDead == true && GameManager.Instance.isMageDead == true)
+        {
+            GameManager.Instance.TriggerDefeat();
+        }
+        if (GameManager.Instance.isKillerDead == true)
+        {
+            GameManager.Instance.TriggerWin();
+        }
         photonView.RPC("SyncButton2", RpcTarget.All, BotonKill.name, false);
         photonView.RPC("SyncButton2", RpcTarget.All, BotonMerlin.name, false);
         photonView.RPC("SyncButton2", RpcTarget.All, BotonKill.name, false);
